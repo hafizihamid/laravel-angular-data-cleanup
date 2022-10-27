@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
+    "start": "ng serve --configuration=development -o",
     "build": "ng build",
+    "build:prod": "ng build --prod && cp ../../../public/assets/angular/index.html ../../views/angular.blade.php",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -26,13 +28,28 @@
     "@angular-devkit/build-angular": "^14.2.7",
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "^14.2.0",
+    "@schuchard/prettier": "^5.1.0",
     "@types/jasmine": "~4.0.0",
+    "husky": "latest",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "lint-staged": "latest",
+    "prettier": "latest",
+    "tslint-config-prettier": "latest",
     "typescript": "~4.7.2"
+  },
+  "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged"
+      }
+    },
+    "lint-staged": {
+      "*.{js,json,css,scss,less,md,ts,html,component.html}": [
+        "prettier --write"
+      ]
+    }
   }
-}
